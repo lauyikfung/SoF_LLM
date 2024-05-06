@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>基于大语言模型的高质量数据生成方法与模型自优化框架-作文撰写</title>
+    </head>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/images/IIIS.jpg'); /* 替换为你的图片URL */
+            background-size: cover; /* 确保图片覆盖整个背景 */
+            background-position: center; /* 图片居中显示 */
+            backdrop-filter: blur(50%); /* 应用50%的虚化效果 */
+            background-color: #333;
+          }
+        .main{
+            margin:20px auto;
+            width:90%;
+            max-width:800px;
+            height:600px;
+        }
+        .chatOper{
+            padding:15px;
+            margin:0;
+            background-color:#66ccff;
+        }
+        .chatInfo{
+            height:110%;
+            overflow-x:hidden;
+            overflow-y:auto;
+            padding:30px 20px;
+            margin:10px 0 0 0;
+            border:1px solid #ccc;
+            border-radius:5px;
+            background-color:#eee;
+            font-size:18px;
+            font-family: '华文行楷';
+            line-height:22px;
+            color:#333;
+        }
+
+        #chatText{
+            width:85%;
+            height:125px;
+            line-height:25px;
+            display: inline-flex;
+            vertical-align:middle;
+            padding:5px;
+            white-space: pre-wrap;
+        }
+        #submitBtn{
+            display: inline-flex;
+            padding:10px 20px;
+            vertical-align:middle;
+        }
+        .question{
+            background-color: #FFDAB9; /* 米黄色背景 */
+            border: 1px solid #EEDD82; /* 米黄色边框 */
+            padding: 10px; /* 内边距 */
+            margin-bottom: 10px; /* 与答案部分的间距 */
+            font-weight: bolder;
+            font-family: '楷体';
+        }
+        .answer{
+            font-family: '华文行楷';
+        }
+        .mytitle {
+            background-color: #66ccff; /* 米黄色背景 */
+            font-family: '楷体'; /* 楷体字体 */
+            margin-bottom: 10px; /* 与答案部分的间距 */
+            font-weight: bolder;
+            font-size:30px;
+            text-align: center;
+        }
+        .score{
+			color:red;
+			font-size:40px;
+			font-family: '华文行楷';
+            text-decoration: underline;
+		}
+        .analysis{
+            font-family: '楷体';
+            color:gray;
+        }
+
+    </style>
+    <body>
+        <div class="mytitle">基于大语言模型的高质量数据生成方法与模型自优化框架-作文撰写</div>
+        <div class="main">
+
+            <div class="chatInfo"></div>
+            <div class="chatOper">
+                <!-- <input type="text" id="chatText" placeholder="请输入完整作文题目" /> -->
+                <textarea id="chatText" name="w3review" rows="5" wrap="hard">请输入完整作文题目</textarea>
+                <input type="button" value="Submit" id="submitBtn" />
+            </div>
+            
+            
+        </div>
+    </body>
+    <script src="{{ url_for('static',filename='jquery.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='marked.min.js')}}"></script>
+    <script language="javascript">
+    <!--
+        $(function() {
+            $("#chatText").focus();
+            $("#submitBtn").click(function(){
+                $(this).attr("disabled",true);
+                $(this).val("....");
+                //var q = $("#chatText").val();
+                var q = $("#chatText").val().replace(/\n/g, "<br>");
+                if(q==''){
+                    $(".chatInfo").html("请输入完整作文题目");
+                    $(this).removeAttr("disabled");
+                    $(this).val("发送");
+                    $("#chatText").focus();
+                    return;
+                }
+                var eventEn = false;
+                $(".chatInfo").html("我在构思中...");
+                var source = new EventSource("/chatgpt?question="+q);
+                source.onmessage = function(event){
+                    if (eventEn === false){
+                        eventEn = true;
+                        $(".chatInfo").html("");
+                    }
+                    if(event.data == "[DONE]"){
+                        $("#submitBtn").removeAttr("disabled");
+                        $("#submitBtn").val("Submit");
+                        $("#chatText").val('');
+                        $("#chatText").focus();
+                        source.close();
+                    }else{
+                        $(".chatInfo").html($(".chatInfo").html() + event.data);
+                    }
+                }
+            });
+        });
+    -->
+    </script>
+</html>
